@@ -1,4 +1,5 @@
 {
   "port": 5000,
+  "jwtSecret": "agrisystem",
   "mongoURI": "mongodb://localhost/agrosystem"
 }

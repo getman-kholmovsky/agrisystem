@@ -4,6 +4,11 @@ const db = require('./db');
 
 const app = express();
 
+app.use(express.json());
+
+app.use('/auth', require('./routes/auth'));
+app.use('/api', require('./routes/api'));
+
 const PORT = config.get('port') || 5000;
 
 db.connect()
