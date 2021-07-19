@@ -1,7 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from "axios";
 
 function App() {
+  axios.get('/api/agriculture')
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   return (
     <div className="App">
       <header className="App-header">
