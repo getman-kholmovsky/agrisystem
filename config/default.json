@@ -1,5 +1,5 @@
 {
   "port": 5000,
   "jwtSecret": "agrisystem",
-  "mongoURI": "mongodb://localhost/agrosystem"
+  "mongoURI": "mongodb+srv://testmongo:testmongo@cluster0.i63xy.mongodb.net/Cluster0?retryWrites=true&w=majority"
 }
