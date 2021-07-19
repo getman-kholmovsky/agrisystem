@@ -1,15 +1,12 @@
 const Agriculture = require('../../models/Agriculture');
 const {validationResult} = require('express-validator');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
 const mongoose = require('mongoose');
-
-const limit = 2;
 
 exports.index = async function (req, res) {
     try {
-        const page = req.body.page || 1;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 4;
+        const pageCount = await Agriculture.count();
         const agricultureList =
             await Agriculture
                 .find()
@@ -17,7 +14,7 @@ exports.index = async function (req, res) {
                 .limit(limit)
                 .select('uniqueId name description small_image');
 
-        return res.json({page: page, data: agricultureList});
+        return res.json({page: page, size: pageCount, data: agricultureList});
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
@@ -96,15 +93,16 @@ exports.update = async function (req, res) {
             temperature, fertilizer
         } = req.body;
 
-        Agriculture.updateOne(
-            {uniqueId: mongoose.Types.ObjectId(id)},
+        await Agriculture.updateOne(
+            {_id: mongoose.Types.ObjectId(id)},
             {
-            name, description, excerpt, small_image,
-            big_image, family, growing_season, watering_frequency,
-            temperature, fertilizer
-        });
+                name, description, excerpt, small_image,
+                big_image, family, growing_season, watering_frequency,
+                temperature, fertilizer
+            }
+        );
 
-        return res.status(201).json();
+        return res.status(200).json();
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
@@ -113,8 +111,10 @@ exports.update = async function (req, res) {
 exports.destroy = async function (req, res) {
     try {
         const id = req.params.id;
-        Agriculture.remove({uniqueId: mongoose.Types.ObjectId(id)});
+        await Agriculture.remove({_id: mongoose.Types.ObjectId(id)});
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
+
+    return res.status(202).json();
 }
