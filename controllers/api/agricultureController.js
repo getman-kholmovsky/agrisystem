@@ -44,9 +44,20 @@ exports.store = async function (req, res) {
             return res.status(400).json({message: 'Агрокультура с таким названием уже существует'});
         }
 
+        let small_image_path = '';
+        let big_image_path = '';
+
+        if (small_image) {
+            small_image_path = storeImage(small_image, 'small');
+        }
+
+        if (big_image) {
+            big_image_path = storeImage(big_image, 'big');
+        }
+
         const agriculture = new Agriculture({
-            name, description, excerpt, small_image,
-            big_image, family, growing_season, watering_frequency,
+            name, description, excerpt, small_image: small_image_path,
+            big_image_path, family, growing_season, watering_frequency,
             temperature, fertilizer
         });
 
@@ -117,4 +128,41 @@ exports.destroy = async function (req, res) {
     }
 
     return res.status(202).json();
+}
+
+function storeImage(image, folder) {
+    const from = image.search(',');
+    const buffer_small_image = new Buffer(image.substring(from + 1), 'base64');
+    let extension = '';
+
+    if (image.startsWith('data:image/jpeg;base64,')) {
+        extension = '.jpg'
+    } else if (image.startsWith('data:image/png;base64,')) {
+        extension = '.png'
+    } else {
+        return res.status(400).json({message: 'Расширение файла должно быть jpg или png'});
+    }
+
+    const now = new Date();
+
+    const filepath =
+        'uploads/img/'
+        + folder
+        + '/'
+        + now.getDay()
+        + '-'
+        + now.getMonth()
+        + '-'
+        + now.getFullYear()
+        + '-'
+        + now.getHours()
+        + '-'
+        + now.getMinutes()
+        + '-'
+        + now.getMilliseconds()
+        + extension;
+
+    require("fs").writeFile(filepath, buffer_small_image, 'base64', (err) => {});
+
+    return filepath;
 }
