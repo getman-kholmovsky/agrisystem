@@ -6,6 +6,7 @@ import Pagination from './components/Pagination';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Plants from './components/Plants';
 import PageNotFound from './components/PageNotFound';
+import NewPlantContainer from './components/NewPlantContainer';
 
 const AppWrapper = styled.div`
   margin-left: auto;
@@ -15,10 +16,11 @@ const AppWrapper = styled.div`
 `;
 
 const Header = styled.div`
-  height: 10vh;
+  height: 5vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 1rem;
   padding-bottom: 1rem;
   background: white;
 `;
@@ -49,7 +51,7 @@ const App = () => {
     setTotalCount(count);
   };
 
-  const numberPages = Math.floor(totalCount / 4);
+  const numberPages = Math.ceil(totalCount / 4);
   return (
     <Router>
       <AppWrapper>
@@ -60,14 +62,23 @@ const App = () => {
           <Route path='/plant/:id'>
             <Plants />
           </Route>
-          <Route path='/page/:pageNumber?'>
+          <Route path='/new/'>
+            <NewPlantContainer />
+          </Route>
+          <Route exact path='/page/:pageNumber?'>
             <FamilyPicker />
             <CardList
               handleCurrentPageChange={handleCurrentPageChange}
               handleTotalCountChange={handleTotalCountChange}
+              numberPages={numberPages}
+              currentPage={currentPage}
             />
             {totalCount > 4 ? (
-              <Pagination pages={numberPages} currentPage={currentPage} />
+              <Pagination
+                pages={numberPages}
+                currentPage={currentPage}
+                handleCurrentPageChange={handleCurrentPageChange}
+              />
             ) : (
               ''
             )}

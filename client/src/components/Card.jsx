@@ -9,7 +9,7 @@ const CardItem = styled.div`
   @media (min-width: 50rem) {
     width: 50%;
   }
-  @media (min-width: 80rem) {
+  @media (min-width: 100rem) {
     width: 25%;
   }
 `;
@@ -27,6 +27,14 @@ const StyledCard = styled(Link)`
   &:link,
   &:active {
     text-decoration: none;
+  }
+  transition: transform 200ms ease-in;
+  &:hover {
+    transform: scale(1.02);
+  }
+  &:hover .cardbutton {
+    background-color: #696969;
+    color: white;
   }
 `;
 
@@ -46,6 +54,7 @@ const CardContent = styled.div`
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+  overflow-wrap: anywhere;
   padding: 1rem;
 `;
 const CardTitle = styled.p`
@@ -57,19 +66,22 @@ const CardTitle = styled.p`
 `;
 const CardDescription = styled.p`
   flex: 1 1 auto;
-  font-size: 0.875rem;
+  flex-direction: column;
+  flex-wrap: wrap;
   line-height: 1.5;
   margin-bottom: 1.25rem;
   color: black;
 `;
 const CardButton = styled.button`
-  font-size: 1rem;
-
+  font-size: 1.5rem;
   background-color: white;
   border: 1px solid #cccccc;
+  border-radius: 0.25rem;
   color: #696969;
-  padding: 0.5rem;
+  padding: 0.3rem;
   text-transform: lowercase;
+  cursor: pointer;
+  transition: background 200ms ease-in, color 200ms ease-in;
 `;
 
 const Card = ({ data }) => {
@@ -80,7 +92,7 @@ const Card = ({ data }) => {
         <CardContent>
           <CardTitle> {data.name}</CardTitle>
           <CardDescription>{data.description}</CardDescription>
-          <CardButton>подробнее</CardButton>
+          <CardButton className='cardbutton'>подробнее</CardButton>
         </CardContent>
       </StyledCard>
     </CardItem>

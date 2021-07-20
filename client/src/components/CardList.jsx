@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Card from './Card';
 import { withRouter } from 'react-router-dom';
+import PageNotFound from './PageNotFound';
+import Pagination from './Pagination';
 
 const StyledCardList = styled.div`
   display: flex;
@@ -13,7 +15,6 @@ const StyledCardList = styled.div`
 
 const CardList = (props) => {
   const [pageData, setpageData] = useState(null);
-
   const getPage = async (pageNumber) => {
     const newData = await fetch(`/api/agriculture?page=${pageNumber}`).then(
       (data) => data.json()
@@ -26,7 +27,6 @@ const CardList = (props) => {
 
   useEffect(() => {
     let pageNumber = props.match.params.pageNumber;
-    console.log(pageNumber);
     if (pageNumber === undefined) {
       pageNumber = 1;
     }
@@ -36,9 +36,11 @@ const CardList = (props) => {
       props.handleTotalCountChange(totalCount);
     });
   }, [props]);
+  console.log(pageData);
 
   return (
     <StyledCardList>
+      {pageData && pageData.length === 0 && <PageNotFound />}
       {pageData &&
         pageData.map((d) => {
           return <Card data={d} key={d._id} />;
