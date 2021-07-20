@@ -25,17 +25,17 @@ const PageLink = styled.a`
 const Pagination = ({ pages, currentPage, handleCurrentPageChange }) => {
   const pageLinks = [];
 
-  for (let i = 1; i <= pages + 1; i++) {
+  for (let i = 1; i <= pages; i++) {
     let isActive = currentPage === i ? true : false;
     pageLinks.push(
-      <Page
-        isActive={isActive}
-        key={i}
-        onClick={() => {
-          handleCurrentPageChange(i);
-        }}
-      >
-        <PageLink href={`/page/${i}`} isActive={isActive}>
+      <Page isActive={isActive} key={i}>
+        <PageLink
+          href={`/page/${i}`}
+          isActive={isActive}
+          onClick={() => {
+            handleCurrentPageChange(i);
+          }}
+        >
           {i}
         </PageLink>
       </Page>
