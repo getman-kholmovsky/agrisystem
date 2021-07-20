@@ -39,29 +39,17 @@ const HeaderText = styled(Link)`
 `;
 
 const App = () => {
-  const [data, setData] = useState(null);
-  const [totalCount, settotalCount] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (pageNumber) => {
-    setData(eval(`fakeData${pageNumber}`));
+  const handleCurrentPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  const numberPages = Math.floor(totalCount / 10 - 1);
-
-  const getPage = async (pageNumber) => {
-    const newData = await fetch('/api/agriculture').then((data) => data.json());
-    const page = newData.page;
-    const pageData = newData.data;
-    return { page, pageData };
+  const handleTotalCountChange = (count) => {
+    setTotalCount(count);
   };
-  useEffect(() => {
-    getPage().then(({ page, pageData }) => {
-      setCurrentPage(page);
-      setData(pageData);
-    });
-  }, []);
+
+  const numberPages = Math.floor(totalCount / 4);
   return (
     <Router>
       <AppWrapper>
@@ -72,14 +60,30 @@ const App = () => {
           <Route path='/plant/:id'>
             <Plants />
           </Route>
+          <Route path='/page/:pageNumber?'>
+            <FamilyPicker />
+            <CardList
+              handleCurrentPageChange={handleCurrentPageChange}
+              handleTotalCountChange={handleTotalCountChange}
+            />
+            {totalCount > 4 ? (
+              <Pagination pages={numberPages} currentPage={currentPage} />
+            ) : (
+              ''
+            )}
+          </Route>
           <Route exact path='/'>
             <FamilyPicker />
-            {data && <CardList data={data} />}
-            {totalCount > 10 ? (
+            <CardList
+              handleCurrentPageChange={handleCurrentPageChange}
+              handleTotalCountChange={handleTotalCountChange}
+              currentPage={currentPage}
+            />
+            {totalCount > 4 ? (
               <Pagination
                 pages={numberPages}
                 currentPage={currentPage}
-                handlePageChange={handlePageChange}
+                handleCurrentPageChange={handleCurrentPageChange}
               />
             ) : (
               ''

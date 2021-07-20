@@ -22,7 +22,7 @@ const PageLink = styled.a`
   font-size: ${({ isActive }) => (isActive ? '2.5rem' : '')};
 `;
 
-const Pagination = ({ pages, currentPage, handlePageChange }) => {
+const Pagination = ({ pages, currentPage, handleCurrentPageChange }) => {
   const pageLinks = [];
 
   for (let i = 1; i <= pages + 1; i++) {
@@ -32,10 +32,10 @@ const Pagination = ({ pages, currentPage, handlePageChange }) => {
         isActive={isActive}
         key={i}
         onClick={() => {
-          handlePageChange(i);
+          handleCurrentPageChange(i);
         }}
       >
-        <PageLink href='#' isActive={isActive}>
+        <PageLink href={`/page/${i}`} isActive={isActive}>
           {i}
         </PageLink>
       </Page>
