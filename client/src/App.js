@@ -16,7 +16,7 @@ const AppWrapper = styled.div`
 `;
 
 const Header = styled.div`
-  height: 5vh;
+  height: 5rem;
   display: flex;
   align-items: center;
   justify-content: center;

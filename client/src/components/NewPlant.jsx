@@ -46,6 +46,7 @@ const StyledLabel = styled.label`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const SubmitButton = styled.input`

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import NewPlant from './NewPlant';
 
 const StyledContainer = styled.div`
-  height: 95vh;
+  /* height: 95vh; */
   width: 100vw;
   display: flex;
   justify-content: center;
