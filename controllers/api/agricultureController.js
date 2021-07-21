@@ -6,13 +6,17 @@ exports.index = async function (req, res) {
     try {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 4;
-        const pageCount = await Agriculture.count();
+        const family = req.query.family;
+
+        const filter = family ? {family} : {}
+
+        const pageCount = await Agriculture.count(filter);
         const agricultureList =
             await Agriculture
-                .find()
+                .find(filter)
                 .skip((page - 1) * limit)
                 .limit(limit)
-                .select('uniqueId name description small_image');
+                .select('uniqueId name excerpt small_image');
 
         return res.json({page: page, size: pageCount, data: agricultureList});
     } catch (e) {
