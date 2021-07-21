@@ -89,6 +89,7 @@ const App = () => {
               handleCurrentPageChange={handleCurrentPageChange}
               handleTotalCountChange={handleTotalCountChange}
               currentPage={currentPage}
+              numberPages={numberPages}
             />
             {totalCount > 4 ? (
               <Pagination

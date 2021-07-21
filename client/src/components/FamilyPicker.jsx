@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const StyledFamilyPicker = styled.div`
   display: flex;
@@ -10,11 +10,6 @@ const StyledFamilyPicker = styled.div`
   padding-left: 3rem;
   padding-right: 3rem;
   background-color: #f0f0f0;
-`;
-
-const FamilyButtons = styled.div`
-  display: flex;
-  flex-wrap: wrap;
 `;
 const Button = styled.button`
   background-color: white;
@@ -27,20 +22,35 @@ const Button = styled.button`
   }
 `;
 
+const Select = styled.select`
+  font-size: 1.5rem;
+`;
+
 const FamilyPicker = () => {
-  const [currentFamily, setCurrentFamily] = useState('Catalog');
+  let history = useHistory();
+
+  const handleChange = (value) => {
+    history.push(`/page/1/${value}`);
+  };
+
   return (
     <StyledFamilyPicker>
       <Link to='/new'>
         <Button>Добавить</Button>
       </Link>
-      <FamilyButtons>
-        <Button>Family1</Button>
-        <Button>Family2</Button>
-        <Button>Family3</Button>
-        <Button>Family4</Button>
-        <Button>Family5</Button>
-      </FamilyButtons>
+      <Select onChange={(e) => handleChange(e.target.value)}>
+        <option>Выбрать семейство</option>
+        <option value='Декоративные'>Декоративные</option>
+        <option value='Зерновые'>Зерновые</option>
+        <option value='Бобовые'>Бобовые</option>
+        <option value='Крахмалоносные'>Крахмалоносные</option>
+        <option value='Сахароносные'>Сахароносные</option>
+        <option value='Масличные'>Масличные</option>
+        <option value='Волокнистые'>Волокнистые</option>
+        <option value='Бахчевые'>Бахчевые</option>
+        <option value='Плодовые'>Плодовые</option>
+        <option value='Стимулирующие'>Стимулирующие</option>
+      </Select>
     </StyledFamilyPicker>
   );
 };
