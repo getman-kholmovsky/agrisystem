@@ -146,12 +146,16 @@ const Plant = ({ data, handleDelete, getPlant }) => {
                 {data.family}
               </CardDescription>
               <CardDescription>
-                <CardDescriptionName>Сезон:</CardDescriptionName>
-                {data.growing_season}
+                <CardDescriptionName>Сезон посева:</CardDescriptionName>
+                {data.sowing_month}
               </CardDescription>
               <CardDescription>
-                <CardDescriptionName>Полив:</CardDescriptionName>
-                {data.watering_frequency}
+                <CardDescriptionName>Сезон сбора:</CardDescriptionName>
+                {data.growing_month}
+              </CardDescription>
+              <CardDescription>
+                <CardDescriptionName>Особенности полива:</CardDescriptionName>
+                {data.watering_details}
               </CardDescription>
               <CardDescription>
                 <CardDescriptionName>Температура:</CardDescriptionName>
@@ -160,6 +164,10 @@ const Plant = ({ data, handleDelete, getPlant }) => {
               <CardDescription>
                 <CardDescriptionName>Удобрения:</CardDescriptionName>
                 {data.fertilizer}
+              </CardDescription>
+              <CardDescription>
+                <CardDescriptionName>Болезни:</CardDescriptionName>
+                {data.diseases}
               </CardDescription>
             </>
           )}

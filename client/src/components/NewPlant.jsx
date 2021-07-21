@@ -85,10 +85,12 @@ const NewPlant = () => {
     small_image: null,
     big_image: null,
     family: 'Декоративные',
-    growingSeason: '',
-    wateringFrequency: '',
+    sowing_month: '',
+    growing_month: '',
+    watering_details: '',
     temperature: '',
     fertilizer: '',
+    diseases: ''
   });
 
   const history = useHistory();
@@ -112,18 +114,7 @@ const NewPlant = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addPlant({
-      name: data.name,
-      description: data.description,
-      excerpt: data.excerpt,
-      small_image: data.small_image,
-      big_image: data.big_image,
-      family: data.family,
-      growing_season: data.growingSeason,
-      watering_frequency: data.wateringFrequency,
-      temperature: data.temperature,
-      fertilizer: data.fertilizer,
-    });
+    addPlant(data);
     console.log(data);
   };
 
@@ -213,22 +204,32 @@ const NewPlant = () => {
             </StyledSelect>
           </StyledLabel>
           <StyledLabel>
-            Сезон:
+            Сезон посева:
+            <StyledInput
+                type='text'
+                name='sowing_month'
+                placeholder='Сезон посева'
+                value={data.sowing_month}
+                onChange={(e) => handleChange(e)}
+            ></StyledInput>
+          </StyledLabel>
+          <StyledLabel>
+            Сезон cбора:
             <StyledInput
               type='text'
-              name='growingSeason'
-              placeholder='Введите Сезон'
-              value={data.growingSeason}
+              name='growing_month'
+              placeholder='Сезон сбора'
+              value={data.growing_month}
               onChange={(e) => handleChange(e)}
             ></StyledInput>
           </StyledLabel>
           <StyledLabel>
-            Полив:
+            Особенности полива:
             <StyledInput
               type='text'
-              name='wateringFrequency'
+              name='watering_details'
               placeholder='Введите Полив'
-              value={data.wateringFrequency}
+              value={data.watering_details}
               onChange={(e) => handleChange(e)}
             ></StyledInput>
           </StyledLabel>
@@ -250,6 +251,16 @@ const NewPlant = () => {
               placeholder='Введите Удобрения'
               value={data.fertilizer}
               onChange={(e) => handleChange(e)}
+            ></StyledInput>
+          </StyledLabel>
+          <StyledLabel>
+            Болезни:
+            <StyledInput
+                type='text'
+                name='diseases'
+                placeholder='Болезни'
+                value={data.diseases}
+                onChange={(e) => handleChange(e)}
             ></StyledInput>
           </StyledLabel>
           <StyledLabel>

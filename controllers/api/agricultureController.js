@@ -40,8 +40,9 @@ exports.store = async function (req, res) {
 
         const {
             name, description, small_image,
-            big_image, family, growing_season, watering_frequency,
-            temperature, fertilizer
+            big_image, family, sowing_month,
+            growing_month, watering_details,
+            temperature, fertilizer, diseases
         } = req.body;
 
         const excerpt = req.body.excerpt ? req.body.excerpt : req.body.description.slice(0, excerptLength);
@@ -64,9 +65,12 @@ exports.store = async function (req, res) {
         }
 
         const agriculture = new Agriculture({
-            name, description, excerpt, small_image: small_image_path,
-            big_image: big_image_path, family, growing_season, watering_frequency,
-            temperature, fertilizer
+            name, description, excerpt,
+            small_image: small_image_path,
+            big_image: big_image_path,
+            family, sowing_month,
+            growing_month, watering_details,
+            temperature, fertilizer, diseases
         });
 
         await agriculture.save();
@@ -93,6 +97,7 @@ exports.show = async function (req, res) {
 }
 
 exports.update = async function (req, res) {
+    console.log(req.body);
     try {
         const errors = validationResult(req);
 
@@ -107,10 +112,14 @@ exports.update = async function (req, res) {
         const id = req.params.id;
 
         const {
-            name, description, excerpt, small_image,
-            big_image, family, growing_season, watering_frequency,
-            temperature, fertilizer
+            name, description, small_image,
+            big_image, family,
+            sowing_month, growing_month,
+            watering_details, temperature,
+            fertilizer, diseases
         } = req.body;
+
+        const excerpt = req.body.excerpt ? req.body.excerpt : req.body.description.slice(0, excerptLength);
 
         let big_image_path = '';
         let small_image_path = '';
@@ -126,9 +135,12 @@ exports.update = async function (req, res) {
         await Agriculture.updateOne(
             {_id: mongoose.Types.ObjectId(id)},
             {
-                name, description, excerpt, small_image: small_image_path,
-                big_image: big_image_path, family, growing_season, watering_frequency,
-                temperature, fertilizer
+                name, description, excerpt,
+                small_image: small_image_path,
+                big_image: big_image_path,
+                family, sowing_month,
+                growing_month, watering_details,
+                temperature, fertilizer, diseases
             }
         );
 

@@ -7,10 +7,12 @@ const schema = new Schema({
     small_image: {type: String},
     big_image: {type: String},
     family: {type: String},
-    growing_season: {type: String},
-    watering_frequency: {type: Number},
+    sowing_month: {type: String},
+    growing_month: {type: String},
+    watering_details: {type: String},
     temperature: {type: Number},
     fertilizer: {type: String},
+    diseases: {type: String},
     created_at: {type: Date},
     updated_at: {type: Date}
 });

@@ -21,10 +21,12 @@ const Plants = (props) => {
     small_image: null,
     big_image: null,
     family: null,
+    sowing_season: null,
     growing_season: null,
-    watering_frequency: null,
+    watering_details: null,
     temperature: null,
     fertilizer: null,
+    diseases: null
   });
   const history = useHistory();
 
@@ -60,19 +62,7 @@ const Plants = (props) => {
 
   useEffect(() => {
     getPlant().then((data) =>
-      setplantData({
-        _id: data._id,
-        name: data.name,
-        description: data.description,
-        excerpt: data.excerpt,
-        small_image: data.small_image,
-        big_image: data.big_image,
-        family: data.family,
-        growing_season: data.growing_season,
-        watering_frequency: data.watering_frequency,
-        temperature: data.temperature,
-        fertilizer: data.fertilizer,
-      })
+      setplantData(data)
     );
   }, []);
   console.log(plantData);

@@ -77,10 +77,12 @@ const EditPlant = ({ initData, handleEditMode }) => {
     small_image: initData.small_image,
     big_image: initData.big_image,
     family: initData.family || 'Декоративные',
-    growingSeason: initData.growing_season,
-    wateringFrequency: initData.watering_frequency,
+    sowing_month: initData.sowing_month,
+    growing_month: initData.growing_month,
+    watering_details: initData.watering_details,
     temperature: initData.temperature,
     fertilizer: initData.fertilizer,
+    diseases: initData.diseases
   });
 
   const editPlant = async (newData) => {
@@ -103,10 +105,12 @@ const EditPlant = ({ initData, handleEditMode }) => {
       small_image: data.small_image,
       big_image: data.big_image,
       family: data.family,
-      growing_season: data.growingSeason,
-      watering_frequency: data.wateringFrequency,
+      sowing_month: data.sowing_month,
+      growing_month: data.growing_month,
+      watering_details: data.watering_details,
       temperature: data.temperature,
       fertilizer: data.fertilizer,
+      diseases: data.diseases
     });
   };
 
@@ -200,23 +204,33 @@ const EditPlant = ({ initData, handleEditMode }) => {
           </StyledSelect>
         </StyledLabel>
         <StyledLabel>
-          Сезон:
+          Сезон посева:
           <StyledInput
-            type='text'
-            name='growingSeason'
-            placeholder='Введите Сезон'
-            value={data.growingSeason}
-            onChange={(e) => handleChange(e)}
+              type='text'
+              name='sowing_month'
+              placeholder='Сезон посева'
+              value={data.sowing_month}
+              onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
-          Полив:
+          Сезон cбора:
           <StyledInput
-            type='text'
-            name='wateringFrequency'
-            placeholder='Введите Полив'
-            value={data.wateringFrequency}
-            onChange={(e) => handleChange(e)}
+              type='text'
+              name='growing_month'
+              placeholder='Сезон сбора'
+              value={data.growing_month}
+              onChange={(e) => handleChange(e)}
+          ></StyledInput>
+        </StyledLabel>
+        <StyledLabel>
+          Особенности полива:
+          <StyledInput
+              type='text'
+              name='watering_details'
+              placeholder='Введите Полив'
+              value={data.watering_details}
+              onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
@@ -237,6 +251,16 @@ const EditPlant = ({ initData, handleEditMode }) => {
             placeholder='Введите Удобрения'
             value={data.fertilizer}
             onChange={(e) => handleChange(e)}
+          ></StyledInput>
+        </StyledLabel>
+        <StyledLabel>
+          Болезни:
+          <StyledInput
+              type='text'
+              name='diseases'
+              placeholder='Болезни'
+              value={data.diseases}
+              onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
