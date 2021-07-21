@@ -57,15 +57,40 @@ const SubmitButton = styled.input`
   cursor: pointer;
 `;
 
+const StyledSelect = styled.select`
+  outline: none;
+  border-radius: 0.5rem;
+  border: 2px solid lightgray;
+  font-size: 1.5rem;
+  padding: 0.6em;
+  min-width: 20rem;
+  width: 70%;
+
+  &::placeholder {
+    color: lightgray;
+  }
+  &:hover:not(:disabled):not(:focus) {
+    border-color: silver;
+  }
+  &:focus {
+    border-color: darkgray;
+  }
+`;
+
 const NewPlant = () => {
   const [data, setData] = useState({
     name: '',
     description: '',
-    family: '',
+    excerpt: '',
+    small_image: null,
+    big_image: null,
+    family: 'Декоративные',
     growingSeason: '',
     wateringFrequency: '',
     temperature: '',
     fertilizer: '',
+    small_image: '',
+    big_image: '',
   });
 
   const history = useHistory();
@@ -87,27 +112,48 @@ const NewPlant = () => {
     history.push('/');
   };
 
-  const handleSumbit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     addPlant({
       name: data.name,
       description: data.description,
-      excerpt:
-        'описание для карточки. Если его нет, то берется некоторая часть из полного описания',
-      small_image: 'маленькое изображение для карточки',
-      big_image: 'нормальное изображение для просмотра',
+      excerpt: data.excerpt,
+      small_image: data.small_image,
+      big_image: null,
       family: data.family,
       growing_season: data.growingSeason,
       watering_frequency: data.wateringFrequency,
       temperature: data.temperature,
       fertilizer: data.fertilizer,
     });
+    console.log(data);
+  };
+
+  const uploadImage = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setData({ ...data, small_image: base64 });
+  };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
   };
 
   return (
     <StyledPlant>
       <PlantCard>
-        <StyledForm onSubmit={handleSumbit}>
+        <StyledForm onSubmit={handleSubmit}>
           <StyledLabel>
             Название:
             <StyledInput
@@ -129,14 +175,42 @@ const NewPlant = () => {
             ></StyledInput>
           </StyledLabel>
           <StyledLabel>
-            Семейство:
+            Короткое описание:
             <StyledInput
+              type='text'
+              name='excerpt'
+              placeholder='Введите короткое описание'
+              value={data.excerpt}
+              onChange={(e) => handleChange(e)}
+            ></StyledInput>
+          </StyledLabel>
+          <StyledLabel>
+            Семейство:
+            {/* <StyledInput
               type='text'
               name='family'
               placeholder='Введите Семейство'
               value={data.family}
               onChange={(e) => handleChange(e)}
-            ></StyledInput>
+            ></StyledInput> */}
+            <StyledSelect
+              type='text'
+              name='family'
+              placeholder='Выберете Семейство'
+              value={data.family}
+              onChange={(e) => handleChange(e)}
+            >
+              <option value='Декоративные'>Декоративные</option>
+              <option value='Зерновые'>Зерновые</option>
+              <option value='Бобовые'>Бобовые</option>
+              <option value='Крахмалоносные'>Крахмалоносные</option>
+              <option value='Сахароносные'>Сахароносные</option>
+              <option value='Масличные'>Масличные</option>
+              <option value='Волокнистые'>Волокнистые</option>
+              <option value='Бахчевые'>Бахчевые</option>
+              <option value='Плодовые'>Плодовые</option>
+              <option value='Стимулирующие'>Стимулирующие</option>
+            </StyledSelect>
           </StyledLabel>
           <StyledLabel>
             Сезон:
@@ -176,6 +250,14 @@ const NewPlant = () => {
               placeholder='Введите Удобрения'
               value={data.fertilizer}
               onChange={(e) => handleChange(e)}
+            ></StyledInput>
+          </StyledLabel>
+          <StyledLabel>
+            Фото:
+            <StyledInput
+              type='file'
+              name='small_image'
+              onChange={(e) => uploadImage(e)}
             ></StyledInput>
           </StyledLabel>
           <SubmitButton type='submit' value='Отправить' />

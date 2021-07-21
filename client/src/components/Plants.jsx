@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Plant from './Plant';
 
 const StyledPlants = styled.div`
-  min-height: 95vh;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -18,6 +17,9 @@ const Plants = (props) => {
     _id: null,
     name: null,
     description: null,
+    excerpt: null,
+    small_image: null,
+    big_image: null,
     family: null,
     growing_season: null,
     watering_frequency: null,
@@ -62,6 +64,9 @@ const Plants = (props) => {
         _id: data._id,
         name: data.name,
         description: data.description,
+        excerpt: data.excerpt,
+        small_image: data.small_image,
+        big_image: data.big_image,
         family: data.family,
         growing_season: data.growing_season,
         watering_frequency: data.watering_frequency,

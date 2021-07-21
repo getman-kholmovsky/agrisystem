@@ -88,10 +88,17 @@ const Card = ({ data }) => {
   return (
     <CardItem>
       <StyledCard to={`/plant/${data._id}`}>
-        <CardImg src={img} />
+        <CardImg
+          src={
+            data.small_image !== 'маленькое изображение для карточки' &&
+            data.small_image
+              ? '/' + data.small_image
+              : img
+          }
+        />
         <CardContent>
           <CardTitle> {data.name}</CardTitle>
-          <CardDescription>{data.description}</CardDescription>
+          <CardDescription>{data.excerpt}</CardDescription>
           <CardButton className='cardbutton'>подробнее</CardButton>
         </CardContent>
       </StyledCard>

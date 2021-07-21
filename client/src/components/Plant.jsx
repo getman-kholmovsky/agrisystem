@@ -24,7 +24,9 @@ const PlantCard = styled.div`
   } */
 `;
 
-const CardImgContiner = styled.div``;
+const CardImgContiner = styled.div`
+  max-width: 50rem;
+`;
 
 const CardImg = styled.img`
   display: block;
@@ -98,6 +100,7 @@ const Styledinput = styled.input``;
 
 const Plant = ({ data, handleDelete, getPlant }) => {
   const [isEditMode, setIsEditMode] = useState(false);
+  // console.log(data);
 
   const handleEditMode = () => {
     setIsEditMode(!isEditMode);
@@ -120,7 +123,14 @@ const Plant = ({ data, handleDelete, getPlant }) => {
           <EditIcon />
         </IconContainer> */}
         <CardImgContiner>
-          <CardImg src={img} />
+          <CardImg
+            src={
+              data.small_image !== 'маленькое изображение для карточки' &&
+              data.small_image
+                ? '/' + data.small_image
+                : img
+            }
+          />
         </CardImgContiner>
         <CardContent>
           {isEditMode ? (

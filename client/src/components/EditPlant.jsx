@@ -17,7 +17,7 @@ const StyledInput = styled.input`
   border-radius: 0.5rem;
   border: 2px solid lightgray;
   font-size: 1.5rem;
-  padding: 0.6em;
+  padding: 0.5rem;
   min-width: 25rem;
   max-width: 50rem;
 
@@ -48,11 +48,35 @@ const SubmitButton = styled.input`
   cursor: pointer;
 `;
 
+const StyledSelect = styled.select`
+  /* font-size: 1.5rem; */
+  outline: none;
+  border-radius: 0.5rem;
+  border: 2px solid lightgray;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  min-width: 25rem;
+  max-width: 50rem;
+
+  &::placeholder {
+    color: lightgray;
+  }
+  &:hover:not(:disabled):not(:focus) {
+    border-color: silver;
+  }
+  &:focus {
+    border-color: darkgray;
+  }
+`;
+
 const EditPlant = ({ initData, handleEditMode }) => {
   const [data, setData] = useState({
     name: initData.name,
     description: initData.description,
-    family: initData.family,
+    excerpt: initData.excerpt,
+    small_image: initData.small_image,
+    big_image: initData.big_image,
+    family: initData.family || 'Декоративные',
     growingSeason: initData.growing_season,
     wateringFrequency: initData.watering_frequency,
     temperature: initData.temperature,
@@ -71,14 +95,13 @@ const EditPlant = ({ initData, handleEditMode }) => {
     handleEditMode();
   };
 
-  const handleSumbit = (e) => {
+  const handleSubmit = (e) => {
     editPlant({
       name: data.name,
       description: data.description,
-      excerpt:
-        'описание для карточки. Если его нет, то берется некоторая часть из полного описания',
-      small_image: 'маленькое изображение для карточки',
-      big_image: 'нормальное изображение для просмотра',
+      excerpt: data.excerpt,
+      small_image: data.small_image,
+      big_image: data.big_image,
       family: data.family,
       growing_season: data.growingSeason,
       watering_frequency: data.wateringFrequency,
@@ -92,9 +115,30 @@ const EditPlant = ({ initData, handleEditMode }) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
+  // const uploadImage = async (e) => {
+  //   const file = e.target.files[0];
+  //   const base64 = await convertBase64(file);
+  //   setData({ ...data, small_image: base64 });
+  // };
+
+  // const convertBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const fileReader = new FileReader();
+  //     fileReader.readAsDataURL(file);
+
+  //     fileReader.onload = () => {
+  //       resolve(fileReader.result);
+  //     };
+
+  //     fileReader.onerror = (error) => {
+  //       reject(error);
+  //     };
+  //   });
+  // };
+
   return (
     <StyledEditPlant>
-      <StyledForm onSubmit={handleSumbit}>
+      <StyledForm onSubmit={handleSubmit}>
         <StyledLabel>
           Название:
           <StyledInput
@@ -116,14 +160,42 @@ const EditPlant = ({ initData, handleEditMode }) => {
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
-          Семейство:
+          Короткое описание:
           <StyledInput
+            type='text'
+            name='excerpt'
+            placeholder='Введите короткое описание'
+            value={data.excerpt}
+            onChange={(e) => handleChange(e)}
+          ></StyledInput>
+        </StyledLabel>
+        <StyledLabel>
+          Семейство:
+          {/* <StyledInput
             type='text'
             name='family'
             placeholder='Введите Семейство'
             value={data.family}
             onChange={(e) => handleChange(e)}
-          ></StyledInput>
+          ></StyledInput> */}
+          <StyledSelect
+            type='text'
+            name='family'
+            placeholder='Выберете Семейство'
+            value={data.family}
+            onChange={(e) => handleChange(e)}
+          >
+            <option value='Декоративные'>Декоративные</option>
+            <option value='Зерновые'>Зерновые</option>
+            <option value='Бобовые'>Бобовые</option>
+            <option value='Крахмалоносные'>Крахмалоносные</option>
+            <option value='Сахароносные'>Сахароносные</option>
+            <option value='Масличные'>Масличные</option>
+            <option value='Волокнистые'>Волокнистые</option>
+            <option value='Бахчевые'>Бахчевые</option>
+            <option value='Плодовые'>Плодовые</option>
+            <option value='Стимулирующие'>Стимулирующие</option>
+          </StyledSelect>
         </StyledLabel>
         <StyledLabel>
           Сезон:
@@ -165,6 +237,14 @@ const EditPlant = ({ initData, handleEditMode }) => {
             onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
+        {/* <StyledLabel>
+          Фото:
+          <StyledInput
+            type='file'
+            name='small_image'
+            onChange={(e) => uploadImage(e)}
+          ></StyledInput>
+        </StyledLabel> */}
         <SubmitButton type='submit' value='Отправить' />
       </StyledForm>
     </StyledEditPlant>
