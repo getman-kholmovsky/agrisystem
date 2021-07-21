@@ -2,6 +2,8 @@ const Agriculture = require('../../models/Agriculture');
 const {validationResult} = require('express-validator');
 const mongoose = require('mongoose');
 
+const excerptLength = 50;
+
 exports.index = async function (req, res) {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -37,10 +39,12 @@ exports.store = async function (req, res) {
         }
 
         const {
-            name, description, excerpt, small_image,
+            name, description, small_image,
             big_image, family, growing_season, watering_frequency,
             temperature, fertilizer
         } = req.body;
+
+        const excerpt = req.body.excerpt ? req.body.excerpt : req.body.description.slice(0, excerptLength);
 
         const candidate = await Agriculture.findOne({name});
 
@@ -48,20 +52,20 @@ exports.store = async function (req, res) {
             return res.status(400).json({message: 'Агрокультура с таким названием уже существует'});
         }
 
-        let small_image_path = '';
         let big_image_path = '';
-
-        if (small_image) {
-            small_image_path = storeImage(small_image, 'small');
-        }
+        let small_image_path = '';
 
         if (big_image) {
             big_image_path = storeImage(big_image, 'big');
+
+            if (small_image) {
+                small_image_path = storeImage(small_image, 'small');
+            }
         }
 
         const agriculture = new Agriculture({
             name, description, excerpt, small_image: small_image_path,
-            big_image_path, family, growing_season, watering_frequency,
+            big_image: big_image_path, family, growing_season, watering_frequency,
             temperature, fertilizer
         });
 
@@ -108,11 +112,22 @@ exports.update = async function (req, res) {
             temperature, fertilizer
         } = req.body;
 
+        let big_image_path = '';
+        let small_image_path = '';
+
+        if (big_image) {
+            big_image_path = storeImage(big_image, 'big');
+
+            if (small_image) {
+                small_image_path = storeImage(small_image, 'small');
+            }
+        }
+
         await Agriculture.updateOne(
             {_id: mongoose.Types.ObjectId(id)},
             {
-                name, description, excerpt, small_image,
-                big_image, family, growing_season, watering_frequency,
+                name, description, excerpt, small_image: small_image_path,
+                big_image: big_image_path, family, growing_season, watering_frequency,
                 temperature, fertilizer
             }
         );
