@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import img from '../img/coffee.jpg';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const CardItem = styled.div`
   display: flex;
@@ -21,6 +21,7 @@ const StyledCard = styled(Link)`
   flex-direction: column;
   border-radius: 0.25rem;
   text-decoration: none;
+
   &:focus,
   &:hover,
   &:visited,
@@ -28,10 +29,13 @@ const StyledCard = styled(Link)`
   &:active {
     text-decoration: none;
   }
+
   transition: transform 200ms ease-in;
+
   &:hover {
     transform: scale(1.02);
   }
+
   &:hover .cardbutton {
     background-color: #696969;
     color: white;
@@ -84,26 +88,24 @@ const CardButton = styled.button`
   transition: background 200ms ease-in, color 200ms ease-in;
 `;
 
-const Card = ({ data }) => {
-  return (
-    <CardItem>
-      <StyledCard to={`/plant/${data._id}`}>
-        <CardImg
-          src={
-            data.small_image !== 'маленькое изображение для карточки' &&
-            data.small_image
-              ? '/' + data.small_image
-              : img
-          }
-        />
-        <CardContent>
-          <CardTitle> {data.name}</CardTitle>
-          <CardDescription>{data.excerpt}</CardDescription>
-          <CardButton className='cardbutton'>подробнее</CardButton>
-        </CardContent>
-      </StyledCard>
-    </CardItem>
-  );
+const Card = ({data}) => {
+    let imageSrc = data.small_image ? data.small_image : data.big_image;
+    imageSrc = imageSrc ? '/' + imageSrc : img;
+
+    return (
+        <CardItem>
+            <StyledCard to={`/plant/${data._id}`}>
+                <CardImg
+                    src={imageSrc}
+                />
+                <CardContent>
+                    <CardTitle> {data.name}</CardTitle>
+                    <CardDescription>{data.excerpt}</CardDescription>
+                    <CardButton className='cardbutton'>подробнее</CardButton>
+                </CardContent>
+            </StyledCard>
+        </CardItem>
+    );
 };
 
 export default Card;

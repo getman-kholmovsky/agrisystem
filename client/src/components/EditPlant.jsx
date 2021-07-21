@@ -115,26 +115,28 @@ const EditPlant = ({ initData, handleEditMode }) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  // const uploadImage = async (e) => {
-  //   const file = e.target.files[0];
-  //   const base64 = await convertBase64(file);
-  //   setData({ ...data, small_image: base64 });
-  // };
+  const uploadImage = async (e, sizeType) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
 
-  // const convertBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsDataURL(file);
+    const dataWithImage = sizeType === 'big' ? { ...data, big_image: base64 } : { ...data, small_image: base64 };
+    setData(dataWithImage);
+  };
 
-  //     fileReader.onload = () => {
-  //       resolve(fileReader.result);
-  //     };
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
 
-  //     fileReader.onerror = (error) => {
-  //       reject(error);
-  //     };
-  //   });
-  // };
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
   return (
     <StyledEditPlant>
@@ -237,14 +239,22 @@ const EditPlant = ({ initData, handleEditMode }) => {
             onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
-        {/* <StyledLabel>
-          Фото:
+        <StyledLabel>
+          Большое фото:
           <StyledInput
-            type='file'
-            name='small_image'
-            onChange={(e) => uploadImage(e)}
-          ></StyledInput>
-        </StyledLabel> */}
+              type='file'
+              name='big_image'
+              onChange={(e) => uploadImage(e, 'big')}
+          />
+        </StyledLabel>
+        <StyledLabel>
+          Маленькое фото:
+          <StyledInput
+              type='file'
+              name='small_image'
+              onChange={(e) => uploadImage(e, 'small')}
+          />
+        </StyledLabel>
         <SubmitButton type='submit' value='Отправить' />
       </StyledForm>
     </StyledEditPlant>

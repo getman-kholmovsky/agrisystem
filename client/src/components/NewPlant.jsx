@@ -89,8 +89,6 @@ const NewPlant = () => {
     wateringFrequency: '',
     temperature: '',
     fertilizer: '',
-    small_image: '',
-    big_image: '',
   });
 
   const history = useHistory();
@@ -119,7 +117,7 @@ const NewPlant = () => {
       description: data.description,
       excerpt: data.excerpt,
       small_image: data.small_image,
-      big_image: null,
+      big_image: data.big_image,
       family: data.family,
       growing_season: data.growingSeason,
       watering_frequency: data.wateringFrequency,
@@ -129,10 +127,12 @@ const NewPlant = () => {
     console.log(data);
   };
 
-  const uploadImage = async (e) => {
+  const uploadImage = async (e, sizeType) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
-    setData({ ...data, small_image: base64 });
+
+    const dataWithImage = sizeType === 'big' ? { ...data, big_image: base64 } : { ...data, small_image: base64 };
+    setData(dataWithImage);
   };
 
   const convertBase64 = (file) => {
@@ -253,12 +253,20 @@ const NewPlant = () => {
             ></StyledInput>
           </StyledLabel>
           <StyledLabel>
-            Фото:
+            Большое фото:
+            <StyledInput
+              type='file'
+              name='big_image'
+              onChange={(e) => uploadImage(e, 'big')}
+            />
+          </StyledLabel>
+          <StyledLabel>
+            Маленькое фото:
             <StyledInput
               type='file'
               name='small_image'
-              onChange={(e) => uploadImage(e)}
-            ></StyledInput>
+              onChange={(e) => uploadImage(e, 'small')}
+            />
           </StyledLabel>
           <SubmitButton type='submit' value='Отправить' />
         </StyledForm>

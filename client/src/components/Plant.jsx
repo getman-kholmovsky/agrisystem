@@ -124,12 +124,7 @@ const Plant = ({ data, handleDelete, getPlant }) => {
         </IconContainer> */}
         <CardImgContiner>
           <CardImg
-            src={
-              data.small_image !== 'маленькое изображение для карточки' &&
-              data.small_image
-                ? '/' + data.small_image
-                : img
-            }
+            src={data.big_image ? '/' + data.big_image : img}
           />
         </CardImgContiner>
         <CardContent>
