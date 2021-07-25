@@ -2,8 +2,10 @@ const {Router} = require('express');
 const agricultureController = require('../controllers/api/agricultureController');
 const {check} = require("express-validator");
 const router = Router();
+const passport = require("../middleware/passport");
 
 const storeCheck = [
+    passport.authenticate,
     check('name', 'Название должно быть заполнено').notEmpty(),
     check('description', 'Описание должно быть заполнено').notEmpty(),
 ];
@@ -39,6 +41,7 @@ router.patch(
 
 router.delete(
     '/agriculture/:id',
+    passport.authenticate,
     agricultureController.destroy
 );
 
