@@ -37,7 +37,7 @@ exports.login = async function (req, res) {
             {expiresIn: '1h'}
         );
 
-        res.json({token, userId: user.id});
+        res.json({token: `Bearer ${token}`, userId: user.id});
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
