@@ -75,7 +75,7 @@ exports.store = async function (req, res) {
 
         await agriculture.save();
 
-        return res.status(201).json();
+        return res.sendStatus(201);
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
@@ -132,19 +132,24 @@ exports.update = async function (req, res) {
             }
         }
 
-        await Agriculture.updateOne(
-            {_id: mongoose.Types.ObjectId(id)},
-            {
-                name, description, excerpt,
-                small_image: small_image_path,
-                big_image: big_image_path,
-                family, sowing_month,
-                growing_month, watering_details,
-                temperature, fertilizer, diseases
-            }
-        );
+        data = {
+            name, description, excerpt,
+            family, sowing_month,
+            growing_month, watering_details,
+            temperature, fertilizer, diseases
+        }
 
-        return res.status(200).json();
+        if (small_image_path !== '') {
+            data.small_image = small_image_path
+        }
+
+        if (big_image_path !== '') {
+            data.big_image = big_image_path
+        }
+
+        await Agriculture.updateOne({_id: mongoose.Types.ObjectId(id)}, data);
+
+        return res.sendStatus(200);
     } catch (e) {
         return res.status(500).json({message: e.message});
     }
@@ -158,7 +163,7 @@ exports.destroy = async function (req, res) {
         return res.status(500).json({message: e.message});
     }
 
-    return res.status(202).json();
+    return res.sendStatus(202);
 }
 
 function storeImage(image, folder) {
