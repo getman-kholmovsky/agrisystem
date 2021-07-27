@@ -7,37 +7,13 @@ import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Plants from './components/Plants';
 import PageNotFound from './components/PageNotFound';
 import NewPlantContainer from './components/NewPlantContainer';
+import Header from './components/Header';
 
 const AppWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   flex-direction: column;
-`;
-
-const Header = styled.div`
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background: white;
-`;
-
-const HeaderText = styled(Link)`
-  font-size: 4rem;
-  font-weight: 400;
-  text-decoration: none;
-  color: black;
-
-  &:focus,
-  &:hover,
-  &:visited,
-  &:link,
-  &:active {
-    text-decoration: none;
-  }
+  background-color: #f0f0f0;
+  height: 100vh;
 `;
 
 const App = () => {
@@ -55,9 +31,7 @@ const App = () => {
   return (
     <Router>
       <AppWrapper>
-        <Header>
-          <HeaderText to='/'>Plants bank</HeaderText>
-        </Header>
+        <Header />
         <Switch>
           <Route path='/plant/:id'>
             <Plants />
@@ -83,6 +57,7 @@ const App = () => {
               ''
             )}
           </Route>
+
           <Route exact path='/'>
             <FamilyPicker />
             <CardList

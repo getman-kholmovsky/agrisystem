@@ -82,7 +82,7 @@ const EditPlant = ({ initData, handleEditMode }) => {
     watering_details: initData.watering_details,
     temperature: initData.temperature,
     fertilizer: initData.fertilizer,
-    diseases: initData.diseases
+    diseases: initData.diseases,
   });
 
   const editPlant = async (newData) => {
@@ -110,7 +110,7 @@ const EditPlant = ({ initData, handleEditMode }) => {
       watering_details: data.watering_details,
       temperature: data.temperature,
       fertilizer: data.fertilizer,
-      diseases: data.diseases
+      diseases: data.diseases,
     });
   };
 
@@ -123,7 +123,10 @@ const EditPlant = ({ initData, handleEditMode }) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
 
-    const dataWithImage = sizeType === 'big' ? { ...data, big_image: base64 } : { ...data, small_image: base64 };
+    const dataWithImage =
+      sizeType === 'big'
+        ? { ...data, big_image: base64 }
+        : { ...data, small_image: base64 };
     setData(dataWithImage);
   };
 
@@ -206,31 +209,31 @@ const EditPlant = ({ initData, handleEditMode }) => {
         <StyledLabel>
           Сезон посева:
           <StyledInput
-              type='text'
-              name='sowing_month'
-              placeholder='Сезон посева'
-              value={data.sowing_month}
-              onChange={(e) => handleChange(e)}
+            type='text'
+            name='sowing_month'
+            placeholder='Сезон посева'
+            value={data.sowing_month}
+            onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
           Сезон cбора:
           <StyledInput
-              type='text'
-              name='growing_month'
-              placeholder='Сезон сбора'
-              value={data.growing_month}
-              onChange={(e) => handleChange(e)}
+            type='text'
+            name='growing_month'
+            placeholder='Сезон сбора'
+            value={data.growing_month}
+            onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
           Особенности полива:
           <StyledInput
-              type='text'
-              name='watering_details'
-              placeholder='Введите Полив'
-              value={data.watering_details}
-              onChange={(e) => handleChange(e)}
+            type='text'
+            name='watering_details'
+            placeholder='Введите Полив'
+            value={data.watering_details}
+            onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
@@ -256,27 +259,27 @@ const EditPlant = ({ initData, handleEditMode }) => {
         <StyledLabel>
           Болезни:
           <StyledInput
-              type='text'
-              name='diseases'
-              placeholder='Болезни'
-              value={data.diseases}
-              onChange={(e) => handleChange(e)}
+            type='text'
+            name='diseases'
+            placeholder='Болезни'
+            value={data.diseases}
+            onChange={(e) => handleChange(e)}
           ></StyledInput>
         </StyledLabel>
         <StyledLabel>
           Большое фото:
           <StyledInput
-              type='file'
-              name='big_image'
-              onChange={(e) => uploadImage(e, 'big')}
+            type='file'
+            name='big_image'
+            onChange={(e) => uploadImage(e, 'big')}
           />
         </StyledLabel>
         <StyledLabel>
           Маленькое фото:
           <StyledInput
-              type='file'
-              name='small_image'
-              onChange={(e) => uploadImage(e, 'small')}
+            type='file'
+            name='small_image'
+            onChange={(e) => uploadImage(e, 'small')}
           />
         </StyledLabel>
         <SubmitButton type='submit' value='Отправить' />

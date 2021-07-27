@@ -1,111 +1,66 @@
-import React from 'react';
 import styled from 'styled-components';
 import img from '../img/coffee.jpg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-const CardItem = styled.div`
-  display: flex;
-  padding: 1rem;
-  @media (min-width: 50rem) {
-    width: 50%;
-  }
-  @media (min-width: 100rem) {
-    width: 25%;
-  }
-`;
-
-const StyledCard = styled(Link)`
-  background-color: white;
-  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  border-radius: 0.25rem;
+const StyledLink = styled(Link)`
   text-decoration: none;
-
   &:focus,
   &:hover,
   &:visited,
   &:link,
   &:active {
     text-decoration: none;
-  }
-
-  transition: transform 200ms ease-in;
-
-  &:hover {
-    transform: scale(1.02);
-  }
-
-  &:hover .cardbutton {
-    background-color: #696969;
-    color: white;
+    color: inherit;
   }
 `;
 
-const CardImg = styled.img`
-  height: auto;
-  max-width: 100%;
-  vertical-align: middle;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-  overflow: hidden;
-  position: relative;
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 400,
+  },
+  media: {
+    height: 250,
+  },
+});
+const StyledCard = styled(Card)`
+  margin-right: 1rem;
+  margin-bottom: 2rem;
 `;
-const CardContent = styled.div`
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  overflow-wrap: anywhere;
-  padding: 1rem;
-`;
-const CardTitle = styled.p`
-  color: #696969;
-  font-size: 1.25rem;
-  font-weight: 300;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-`;
-const CardDescription = styled.p`
-  flex: 1 1 auto;
-  flex-direction: column;
-  flex-wrap: wrap;
-  line-height: 1.5;
-  margin-bottom: 1.25rem;
-  color: black;
-`;
-const CardButton = styled.button`
-  font-size: 1.5rem;
-  background-color: white;
-  border: 1px solid #cccccc;
-  border-radius: 0.25rem;
-  color: #696969;
-  padding: 0.3rem;
-  text-transform: lowercase;
-  cursor: pointer;
-  transition: background 200ms ease-in, color 200ms ease-in;
-`;
+const StyledCardMedia = styled(CardMedia)``;
+export default function MediaCard({ data }) {
+  const classes = useStyles();
+  let imageSrc = data.small_image ? data.small_image : data.big_image;
+  imageSrc = imageSrc ? '/' + imageSrc : img;
 
-const Card = ({data}) => {
-    let imageSrc = data.small_image ? data.small_image : data.big_image;
-    imageSrc = imageSrc ? '/' + imageSrc : img;
-
-    return (
-        <CardItem>
-            <StyledCard to={`/plant/${data._id}`}>
-                <CardImg
-                    src={imageSrc}
-                />
-                <CardContent>
-                    <CardTitle> {data.name}</CardTitle>
-                    <CardDescription>{data.excerpt}</CardDescription>
-                    <CardButton className='cardbutton'>подробнее</CardButton>
-                </CardContent>
-            </StyledCard>
-        </CardItem>
-    );
-};
-
-export default Card;
+  return (
+    <StyledCard className={classes.root}>
+      <CardActionArea>
+        <StyledLink to={`/plant/${data._id}`}>
+          <StyledCardMedia className={classes.media} image={imageSrc} />
+          <CardContent>
+            <Typography gutterBottom variant='h4' component='h2'>
+              {data.name}
+            </Typography>
+            <Typography variant='body1' color='textSecondary' component='p'>
+              {data.excerpt}
+            </Typography>
+          </CardContent>
+        </StyledLink>
+      </CardActionArea>
+      <CardActions>
+        <Button size='large' color='primary'>
+          <StyledLink to={`/plant/${data._id}`}>Подробнее</StyledLink>
+        </Button>
+      </CardActions>
+    </StyledCard>
+  );
+}

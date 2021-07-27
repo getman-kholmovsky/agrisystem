@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import NewPlant from './NewPlant';
+import CreatePlant from './CreatePlant';
 
 const StyledContainer = styled.div`
   /* height: 95vh; */
@@ -9,12 +10,11 @@ const StyledContainer = styled.div`
   justify-content: center;
   padding-left: 2rem;
   padding-right: 2rem;
-  background-color: #f0f0f0;
 `;
 const NewPlantContainer = () => {
   return (
     <StyledContainer>
-      <NewPlant />
+      <CreatePlant />
     </StyledContainer>
   );
 };

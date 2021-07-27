@@ -90,7 +90,7 @@ const NewPlant = () => {
     watering_details: '',
     temperature: '',
     fertilizer: '',
-    diseases: ''
+    diseases: '',
   });
 
   const history = useHistory();
@@ -122,7 +122,10 @@ const NewPlant = () => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
 
-    const dataWithImage = sizeType === 'big' ? { ...data, big_image: base64 } : { ...data, small_image: base64 };
+    const dataWithImage =
+      sizeType === 'big'
+        ? { ...data, big_image: base64 }
+        : { ...data, small_image: base64 };
     setData(dataWithImage);
   };
 
@@ -206,11 +209,11 @@ const NewPlant = () => {
           <StyledLabel>
             Сезон посева:
             <StyledInput
-                type='text'
-                name='sowing_month'
-                placeholder='Сезон посева'
-                value={data.sowing_month}
-                onChange={(e) => handleChange(e)}
+              type='text'
+              name='sowing_month'
+              placeholder='Сезон посева'
+              value={data.sowing_month}
+              onChange={(e) => handleChange(e)}
             ></StyledInput>
           </StyledLabel>
           <StyledLabel>
@@ -256,11 +259,11 @@ const NewPlant = () => {
           <StyledLabel>
             Болезни:
             <StyledInput
-                type='text'
-                name='diseases'
-                placeholder='Болезни'
-                value={data.diseases}
-                onChange={(e) => handleChange(e)}
+              type='text'
+              name='diseases'
+              placeholder='Болезни'
+              value={data.diseases}
+              onChange={(e) => handleChange(e)}
             ></StyledInput>
           </StyledLabel>
           <StyledLabel>

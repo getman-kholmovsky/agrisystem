@@ -8,9 +8,10 @@ import Pagination from './Pagination';
 const StyledCardList = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  background-color: #f0f0f0;
+  padding-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-around;
 `;
 
 const CardList = (props) => {

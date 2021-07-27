@@ -4,12 +4,10 @@ import styled from 'styled-components';
 import Plant from './Plant';
 
 const StyledPlants = styled.div`
-  width: 100vw;
   display: flex;
   justify-content: center;
   padding-left: 2rem;
   padding-right: 2rem;
-  background-color: #f0f0f0;
 `;
 
 const Plants = (props) => {
@@ -26,7 +24,7 @@ const Plants = (props) => {
     watering_details: null,
     temperature: null,
     fertilizer: null,
-    diseases: null
+    diseases: null,
   });
   const history = useHistory();
 
@@ -61,9 +59,7 @@ const Plants = (props) => {
   };
 
   useEffect(() => {
-    getPlant().then((data) =>
-      setplantData(data)
-    );
+    getPlant().then((data) => setplantData(data));
   }, []);
   console.log(plantData);
   return (
