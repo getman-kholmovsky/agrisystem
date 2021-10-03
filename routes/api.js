@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const agricultureController = require('../controllers/api/agricultureController');
 const {check} = require("express-validator");
+const {authenticate} = require("../middleware/passport");
 const router = Router();
 
 const storeCheck = [
@@ -22,23 +23,27 @@ router.get(
 router.post(
     '/agriculture',
     storeCheck,
+    authenticate,
     agricultureController.store
 );
 
 router.put(
     '/agriculture/:id',
     storeCheck,
+    authenticate,
     agricultureController.update
 );
 
 router.patch(
     '/agriculture/:id',
     storeCheck,
+    authenticate,
     agricultureController.update
 );
 
 router.delete(
     '/agriculture/:id',
+    authenticate,
     agricultureController.destroy
 );
 
