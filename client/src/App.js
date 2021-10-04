@@ -13,7 +13,6 @@ const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #f0f0f0;
-  height: 100vh;
 `;
 
 const App = () => {

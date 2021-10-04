@@ -17,7 +17,8 @@ const StyledCardList = styled.div`
 const CardList = (props) => {
   const [pageData, setpageData] = useState(null);
   const getPage = async (pageNumber) => {
-    const newData = await fetch(`/api/agriculture?page=${pageNumber}`).then(
+    const limit = 3
+    const newData = await fetch(`/api/agriculture?page=${pageNumber}&limit=${limit}`).then(
       (data) => data.json()
     );
     const pageData = newData.data;
