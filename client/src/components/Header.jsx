@@ -34,7 +34,6 @@ export default function ButtonAppBar() {
         <Typography variant='h6'>
           <StyledLink to='/'>Plants bank</StyledLink>
         </Typography>
-        {/* <Typography variant='h6'>Plants bank</Typography> */}
       </StyledAppBar>
     </div>
   );

@@ -13,11 +13,14 @@ const AppWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #f0f0f0;
+  height: 100vh;
 `;
 
 const App = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageData, setpageData] = useState(null);
+  const [family, setFamily] = useState('');
 
   const handleCurrentPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -26,7 +29,7 @@ const App = () => {
     setTotalCount(count);
   };
 
-  const numberPages = Math.ceil(totalCount / 4);
+  const numberPages = Math.ceil(totalCount / 3);
   return (
     <Router>
       <AppWrapper>
@@ -38,13 +41,16 @@ const App = () => {
           <Route path='/new/'>
             <NewPlantContainer />
           </Route>
-          <Route exact path='/page/:pageNumber?'>
-            <FamilyPicker />
+          <Route exact path='/page/:pageNumber'>
             <CardList
               handleCurrentPageChange={handleCurrentPageChange}
               handleTotalCountChange={handleTotalCountChange}
               numberPages={numberPages}
               currentPage={currentPage}
+              pageData={pageData}
+              setpageData={setpageData}
+              family={family}
+              setFamily={setFamily}
             />
             {totalCount > 4 ? (
               <Pagination
@@ -58,12 +64,15 @@ const App = () => {
           </Route>
 
           <Route exact path='/'>
-            <FamilyPicker />
             <CardList
               handleCurrentPageChange={handleCurrentPageChange}
               handleTotalCountChange={handleTotalCountChange}
               currentPage={currentPage}
               numberPages={numberPages}
+              pageData={pageData}
+              setpageData={setpageData}
+              family={family}
+              setFamily={setFamily}
             />
             {totalCount > 4 ? (
               <Pagination

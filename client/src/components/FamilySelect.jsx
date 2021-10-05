@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -16,14 +16,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleSelect() {
+const FamilySelect = (props) => {
   const classes = useStyles();
-  // const [age, setAge] = React.useState('');
 
-  // const handleChange = (event) => {
-  //   setAge(event.target.value);
-  // };
+  const [selectValue, setSelectValue] = useState('');
 
+  const handleSelect = (e) => {
+    setSelectValue(e.target.value);
+    props.setFamily(e.target.value);
+  };
+  console.log(selectValue);
   return (
     <div>
       <FormControl className={classes.formControl}>
@@ -31,8 +33,8 @@ export default function SimpleSelect() {
         <Select
           labelId='demo-simple-select-label'
           id='demo-simple-select'
-          // value={age}
-          // onChange={handleChange}
+          onChange={handleSelect}
+          value={selectValue}
         >
           <MenuItem value='Декоративные'>Декоративные</MenuItem>
           <MenuItem value='Зерновые'>Зерновые</MenuItem>
@@ -48,4 +50,6 @@ export default function SimpleSelect() {
       </FormControl>
     </div>
   );
-}
+};
+
+export default FamilySelect;

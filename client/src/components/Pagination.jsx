@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Pagination from '@material-ui/lab/Pagination';
-import { makeStyles } from '@material-ui/core/styles';
 import PaginationItem from '@material-ui/lab/PaginationItem';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const StyledPagination = styled(Pagination)`
   display: flex;
@@ -27,14 +26,12 @@ const PageLink = styled.a`
   font-size: ${({ isActive }) => (isActive ? '2.5rem' : '')};
 `;
 
-const PaginationContainer = ({
-  pages,
-  currentPage,
-  handleCurrentPageChange,
-}) => {
+const PaginationContainer = ({ pages, handleCurrentPageChange }) => {
+  const { pageNumber } = useParams();
+  console.log(pageNumber);
   const pageLinks = [];
   for (let i = 1; i <= pages; i++) {
-    let isActive = currentPage === i ? true : false;
+    let isActive = pageNumber === i ? true : false;
     pageLinks.push(
       <Page isActive={isActive} key={i}>
         <PageLink
@@ -52,15 +49,12 @@ const PaginationContainer = ({
   return (
     <StyledPagination
       count={pageLinks.length}
+      page={parseInt(pageNumber) || 1}
       color='primary'
       hidePrevButton
       hideNextButton
       renderItem={(item) => (
-        <PaginationItem
-          component={Link}
-          to={`${item.page === 1 ? '' : `/page/${item.page}`}`}
-          {...item}
-        />
+        <PaginationItem component={Link} to={`/page/${item.page}`} {...item} />
       )}
     ></StyledPagination>
   );

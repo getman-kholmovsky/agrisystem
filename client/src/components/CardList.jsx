@@ -1,52 +1,65 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Card from './Card';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useParams } from 'react-router-dom';
 import PageNotFound from './PageNotFound';
-import Pagination from './Pagination';
+import FamilyPicker from './FamilyPicker';
 
 const StyledCardList = styled.div`
   display: flex;
-  /* flex-wrap: wrap; */
+  flex-direction: column;
   padding-top: 1rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  /* justify-content: space-between; */
+  justify-content: center;
+`;
+
+const Cards = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const CardList = (props) => {
-  const [pageData, setpageData] = useState(null);
-  const getPage = async (pageNumber) => {
-    const limit = 3
-    const newData = await fetch(`/api/agriculture?page=${pageNumber}&limit=${limit}`).then(
-      (data) => data.json()
-    );
+  let { pageNumber } = useParams();
+  const getPage = async (pageNumber, family) => {
+    const limit = 3;
+    const newData = await fetch(
+      `/api/agriculture?page=${pageNumber}&limit=${limit}&family=${family}`
+    ).then((data) => data.json());
     const pageData = newData.data;
     const currentPage = newData.page;
     const totalCount = newData.size;
+    console.log(totalCount);
     return { pageData, currentPage, totalCount };
   };
 
   useEffect(() => {
-    let pageNumber = props.match.params.pageNumber;
     if (pageNumber === undefined) {
       pageNumber = 1;
     }
-    getPage(pageNumber).then(({ pageData, currentPage, totalCount }) => {
-      setpageData(pageData);
-      props.handleCurrentPageChange(currentPage);
+    getPage(pageNumber, props.family).then(({ pageData, totalCount }) => {
+      props.setpageData(pageData);
       props.handleTotalCountChange(totalCount);
     });
-  }, [props]);
-  console.log(pageData);
+  }, [pageNumber, props.family]);
+  console.log(props);
 
   return (
     <StyledCardList>
-      {pageData && pageData.length === 0 && <PageNotFound />}
-      {pageData &&
-        pageData.map((d) => {
-          return <Card data={d} key={d._id} />;
-        })}
+      <FamilyPicker
+        pageData={props.pageData}
+        setpageData={props.setpageData}
+        getPage={getPage}
+        family={props.family}
+        setFamily={props.setFamily}
+      />
+      {props.pageData && props.pageData.length === 0 && <PageNotFound />}
+      <Cards>
+        {props.pageData &&
+          props.pageData.map((d) => {
+            return <Card data={d} key={d._id} />;
+          })}
+      </Cards>
     </StyledCardList>
   );
 };

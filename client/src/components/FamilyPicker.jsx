@@ -20,7 +20,7 @@ const StyledLink = styled(Link)`
 `;
 const StyledButton = styled(Button)``;
 
-const FamilyPicker = () => {
+const FamilyPicker = (props) => {
   let history = useHistory();
 
   const handleChange = (value) => {
@@ -34,23 +34,11 @@ const FamilyPicker = () => {
           Добавить
         </StyledButton>
       </StyledLink>
-      {/* <StyledSelect
-        onChange={(e) => handleChange(e.target.value)}
-        defaultValue='Выбрать семейство'
-      >
-        <option>Выбрать семейство</option>
-        <option value='Декоративные'>Декоративные</option>
-        <option value='Зерновые'>Зерновые</option>
-        <option value='Бобовые'>Бобовые</option>
-        <option value='Крахмалоносные'>Крахмалоносные</option>
-        <option value='Сахароносные'>Сахароносные</option>
-        <option value='Масличные'>Масличные</option>
-        <option value='Волокнистые'>Волокнистые</option>
-        <option value='Бахчевые'>Бахчевые</option>
-        <option value='Плодовые'>Плодовые</option>
-        <option value='Стимулирующие'>Стимулирующие</option>
-      </StyledSelect> */}
-      {/* <FamilySelect></FamilySelect> */}
+      <FamilySelect
+        getPage={props.getPage}
+        family={props.family}
+        setFamily={props.setFamily}
+      ></FamilySelect>
     </StyledFamilyPicker>
   );
 };
