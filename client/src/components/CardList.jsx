@@ -7,11 +7,11 @@ import Pagination from './Pagination';
 
 const StyledCardList = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   padding-top: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: space-around;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  /* justify-content: space-between; */
 `;
 
 const CardList = (props) => {

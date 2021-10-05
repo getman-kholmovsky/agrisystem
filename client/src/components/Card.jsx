@@ -25,10 +25,10 @@ const StyledLink = styled(Link)`
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 400,
+    maxWidth: 350,
   },
   media: {
-    height: 250,
+    height: 200,
   },
 });
 const StyledCard = styled(Card)`

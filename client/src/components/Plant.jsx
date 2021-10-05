@@ -44,7 +44,7 @@ const Plant = ({ data, handleDelete, getPlant }) => {
 
   const useStyles = makeStyles({
     media: {
-      height: 350,
+      height: 300,
     },
   });
   const classes = useStyles();

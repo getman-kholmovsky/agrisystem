@@ -8,6 +8,7 @@ const StyledPlants = styled.div`
   justify-content: center;
   padding-left: 2rem;
   padding-right: 2rem;
+  background-color: #f0f0f0;
 `;
 
 const Plants = (props) => {

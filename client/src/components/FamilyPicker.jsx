@@ -50,7 +50,7 @@ const FamilyPicker = () => {
         <option value='Плодовые'>Плодовые</option>
         <option value='Стимулирующие'>Стимулирующие</option>
       </StyledSelect> */}
-      <FamilySelect></FamilySelect>
+      {/* <FamilySelect></FamilySelect> */}
     </StyledFamilyPicker>
   );
 };
